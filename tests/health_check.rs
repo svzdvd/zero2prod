@@ -7,7 +7,9 @@ async fn health_check_works() {
     let client = reqwest::Client::new();
 
     // Act
-    let response = client.get(format!("{}/health_check", address)).send()
+    let response = client
+        .get(format!("{}/health_check", address))
+        .send()
         .await
         .expect("Failed to execute request.");
 
@@ -31,7 +33,7 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
         .send()
         .await
         .expect("Failed to execute request.");
-    
+
     // Assert
     assert_eq!(200, response.status().as_u16());
 }
@@ -45,7 +47,7 @@ async fn subscribe_returns_a_400_when_data_is_missing() {
         ("name=le%20guin", "missing the email"),
         ("email=ursula_le_guin%40gmail.com", "missing the name"),
         ("", "empty body"),
-        ("name=&email=", "missing both name and email")
+        ("name=&email=", "missing both name and email"),
     ];
 
     for (invalid_body, error_message) in test_cases {
@@ -64,14 +66,16 @@ async fn subscribe_returns_a_400_when_data_is_missing() {
             response.status().as_u16(),
             // Error message on test failure
             "The API did not fail with 400 Bad Request when the payload was {}.",
-            error_message);
+            error_message
+        );
     }
 }
 
 // Launch our application in the background
 fn spawn_app() -> String {
     let ip_address = "127.0.0.1";
-    let listener = TcpListener::bind(format!("{}:0", ip_address)).expect("Failed to bind random port");
+    let listener =
+        TcpListener::bind(format!("{}:0", ip_address)).expect("Failed to bind random port");
     let port = listener.local_addr().unwrap().port();
     let server = zero2prod::startup::run(listener).expect("Failed to bind address");
     // Launch the server as a background task

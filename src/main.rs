@@ -1,5 +1,5 @@
-use zero2prod::startup;
 use std::net::TcpListener;
+use zero2prod::startup;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
