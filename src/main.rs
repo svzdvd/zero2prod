@@ -1,8 +1,8 @@
-use zero2prod::run;
+use zero2prod::startup;
 use std::net::TcpListener;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let listener = TcpListener::bind("127.0.0.1:8000").expect("Failed to bind port");
-    run(listener)?.await
+    startup::run(listener)?.await
 }
