@@ -13,9 +13,11 @@ name = "zero2prod"
 
 [dependencies]
 serde = { version = "1", features = ["derive"]}
-actix-web = "=4.0.0-beta.13"
-actix-http = "=3.0.0-beta.14"
-config = "0.11.0"
+actix-web = "=4.0.0-beta.16"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+config = { version = "0.11", default-features = false, features = ["yaml"] }
+uuid = { version = "0.8.1", features = ["v4"] }
+chrono = "0.4.15"
 
 [dependencies.sqlx]
 version = "0.5.7"
@@ -30,8 +32,6 @@ features = [
 ]
 
 [dev-dependencies]
-actix-rt = "2"
 reqwest = "0.11"
-tokio = "1"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
